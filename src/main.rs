@@ -67,7 +67,7 @@ fn main(){
        }
        println!("\n\n");
    }
-   dungeon_entrance(hero);
+   dungeon_entrance(&mut hero);
    
 }
 //    let mut sword = Weapon {
@@ -77,7 +77,7 @@ fn main(){
 //    me.attack_up(sword.damage);
 //    me.attack = 30;
 
-fn dungeon_entrance(hero: Hero) {
+fn dungeon_entrance(hero: &mut Hero) {
     let time = Duration::from_secs(2);
     println!("You crawl through the dungeon's opening and see two paths ahead of you");
     //sleep(time);
@@ -98,13 +98,13 @@ fn dungeon_entrance(hero: Hero) {
     }
 }
 
-fn dungeon_path_left(hero: &Hero) {
+fn dungeon_path_left(mut hero: &Hero) {
     let time = Duration::from_secs(2);
     println!("You walk through a dark and damp tunnel and can hear what sounds like a vicous beast close ahead!");
     println!("You enter a vast cavern and see the mighty dragon Placidusax feasting on the bones of past adventurers!");
     //sleep(time);
     println!("Prepare for battle!\n");
-    battle_sequence(hero);
+    battle_sequence(&mut hero);
 }
 
 
@@ -112,7 +112,7 @@ fn dungeon_path_right(hero: &Hero) {
     
 }
 
-fn battle_sequence(hero: &Hero) {
+fn battle_sequence(hero: &mut Hero) {
     let mut dragon = Boss::init_boss();
     let file_path = String::from("ascii_art/dragon.txt");
     print_ascii(file_path);
