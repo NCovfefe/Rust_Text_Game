@@ -1,28 +1,6 @@
-use read_input::prelude::*;
+// use read_input::prelude::*;
+// use random_number::random;
 
 fn main(){
-
-    println!("Do you want to enter the equations manually or randomly?");
-
-
-}
-
-
-fn man_input(){
-
-}
-
-
-fn rand_input(){
-
-}
-
-
-fn jacobi(){
-
-}
-
-
-fn gauss(){
-
+    
 }
