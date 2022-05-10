@@ -87,10 +87,10 @@ fn dungeon_entrance(hero: &mut Hero) {
         let path_input = input::<u32>().get();
 
         if path_input == 1 {
-            dungeon_path_left(&hero)
+            dungeon_path_left(hero)
         }
         else if path_input == 2 {
-            dungeon_path_right(&hero)
+            dungeon_path_right(hero)
         }
         else {
             println!("Don't be scared! Adventure awaits!");
@@ -98,13 +98,13 @@ fn dungeon_entrance(hero: &mut Hero) {
     }
 }
 
-fn dungeon_path_left(mut hero: &Hero) {
+fn dungeon_path_left(hero: &mut Hero) {
     let time = Duration::from_secs(2);
     println!("You walk through a dark and damp tunnel and can hear what sounds like a vicous beast close ahead!");
     println!("You enter a vast cavern and see the mighty dragon Placidusax feasting on the bones of past adventurers!");
     //sleep(time);
     println!("Prepare for battle!\n");
-    battle_sequence(&mut hero);
+    battle_sequence(hero);
 }
 
 
@@ -175,8 +175,8 @@ impl Hero {
     }
 
     //Deal damage to character
-    fn take_damage(&mut self, loss: u32) {
-        self.health -= loss;
+    fn take_damage(&mut self, loss: u32) -> u32 {
+        self.health - loss
     }
     
     //How much damage is dealt
@@ -225,12 +225,12 @@ impl Boss {
         self.defense += defense;
     }
 
-    fn deal_damage(&mut self, defense: u32){
-        self.attack -= defense;
+    fn deal_damage(&mut self, defense: u32) -> u32{
+        self.attack - defense
     }
 
-    fn take_damage(&mut self, loss: u32) {
-        self.health -= loss;
+    fn take_damage(&mut self, loss: u32) -> u32 {
+        self.health - loss
     } 
 }
 
