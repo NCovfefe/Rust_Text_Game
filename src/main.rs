@@ -303,8 +303,8 @@ struct Boss {
 
 impl Boss {
     
-    fn init_boss() -> Boss {
-        Boss {health: 525, attack: 50, defense: 150}
+    fn init_boss() -> Self {
+        Self {health: 525, attack: 50, defense: 150}
     }
 
     // fn def_up(&mut self, defense: i32) {
