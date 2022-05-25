@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 read_input = "0.8.6"
 random-number = "0.1.7"
+assert-type-eq = "0.1.0"
