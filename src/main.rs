@@ -5,11 +5,23 @@ use std::io::prelude::*;
 use std::time::Duration;
 use std::thread::sleep;
 
+
 static TIME: Duration = Duration::from_secs(1);
 
 
 //Takes file path and prints file
 fn print_ascii(file_path: String) {
+=======
+/*
+CS 4080
+Professor Raheja
+5/14/22
+Nate Clarke & Garrett Adams
+*/
+
+//takes file path and prints file
+fn print_ascii(file_path: String){
+  
     let mut file = File::open(file_path).unwrap();
     let mut art = String::new();
     file.read_to_string(&mut art).unwrap();
