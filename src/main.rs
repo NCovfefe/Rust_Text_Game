@@ -1,3 +1,10 @@
+/*
+CS 4080
+Professor Raheja
+5/14/22
+Nate Clarke & Garrett Adams
+*/
+
 use read_input::prelude::*;
 use random_number::random;
 use std::fs::File;
@@ -9,15 +16,6 @@ use std::thread::sleep;
 static TIME: Duration = Duration::from_secs(1);
 
 
-//Takes file path and prints file
-fn print_ascii(file_path: String) {
-=======
-/*
-CS 4080
-Professor Raheja
-5/14/22
-Nate Clarke & Garrett Adams
-*/
 
 //takes file path and prints file
 fn print_ascii(file_path: String){
@@ -33,60 +31,60 @@ fn main() {
     let mut player = game_setup();
     let mut gold = 100;                      //begin with 100 gold  
     //let mut hero = Hero::init_hero();        //initialize a hero struct
-    println!("You are the fiercest warrior known as Raheja the Centaur!");
-    let file_path = String::from("ascii_art/centaur.txt");
-    print_ascii(file_path);
-    sleep(TIME);
-    println!("You are on a quest to find and defeat the great dragon Placidusax");
-    sleep(TIME);
-    println!("First you decide to stop by the local trader");
-    sleep(TIME);
-    println!("...");
-    sleep(TIME);
-    println!("Hello Traveler!");
-    sleep(TIME);
-    println!("Please take a look at what I have to offer...\n\n");
-    sleep(TIME);
+    // println!("You are the fiercest warrior known as Raheja the Centaur!");
+    // let file_path = String::from("ascii_art/centaur.txt");
+    // print_ascii(file_path);
+    // sleep(TIME);
+    // println!("You are on a quest to find and defeat the great dragon Placidusax");
+    // sleep(TIME);
+    // println!("First you decide to stop by the local trader");
+    // sleep(TIME);
+    // println!("...");
+    // sleep(TIME);
+    // println!("Hello Traveler!");
+    // sleep(TIME);
+    // println!("Please take a look at what I have to offer...\n\n");
+    // sleep(TIME);
 
-    let mut choice = 0;
-    while choice != 4 {
-        println!("You currently have {} gold", gold);
-        println!("(1) Greatsword(increase attack by 50) - 50 gold ");
-        let file_path = String::from("ascii_art/sword.txt");
-        print_ascii(file_path);
+    // let mut choice = 0;
+    // while choice != 4 {
+    //     println!("You currently have {} gold", gold);
+    //     println!("(1) Greatsword(increase attack by 50) - 50 gold ");
+    //     let file_path = String::from("ascii_art/sword.txt");
+    //     print_ascii(file_path);
 
-        println!("(2) Enchanted shield(increases defense by 20) -30 gold");
-        let file_path = String::from("ascii_art/shield.txt");
-        print_ascii(file_path);
+    //     println!("(2) Enchanted shield(increases defense by 20) -30 gold");
+    //     let file_path = String::from("ascii_art/shield.txt");
+    //     print_ascii(file_path);
 
-        println!("(3) Dodge Potion(Increase dodge probability by 15%) -10 gold ");
-        let file_path = String::from("ascii_art/potion.txt");
-        print_ascii(file_path);
+    //     println!("(3) Dodge Potion(Increase dodge probability by 15%) -10 gold ");
+    //     let file_path = String::from("ascii_art/potion.txt");
+    //     print_ascii(file_path);
         
-        println!("(4) Goodbye");
+    //     println!("(4) Goodbye");
 
-        choice = input::<u32>().get();
+    //     choice = input::<u32>().get();
         
-        if choice == 1 {
-            gold -= 50;
-            hero.attack_up(50);
-        } else if choice == 2 {
-            gold -= 30;
-            hero.def_up(20);
-        } else if choice == 3 {
-            gold -= 10;
-            hero.evade_up(0.15);
-        } else if choice == 4 {
-            choice = 4; 
-            println!("Thank you traveler... I bid you good luck!");
-        } 
-        if gold < 10 {
-            choice = 4; 
-            println!("Thank you traveler... I bid you good luck!");
-        }
-        println!("\n\n");
-    }
-    dungeon_entrance(&mut hero);
+    //     if choice == 1 {
+    //         gold -= 50;
+    //         hero.attack_up(50);
+    //     } else if choice == 2 {
+    //         gold -= 30;
+    //         hero.def_up(20);
+    //     } else if choice == 3 {
+    //         gold -= 10;
+    //         hero.evade_up(0.15);
+    //     } else if choice == 4 {
+    //         choice = 4; 
+    //         println!("Thank you traveler... I bid you good luck!");
+    //     } 
+    //     if gold < 10 {
+    //         choice = 4; 
+    //         println!("Thank you traveler... I bid you good luck!");
+    //     }
+    //     println!("\n\n");
+    // }
+    // dungeon_entrance(&mut hero);
    
 }
 
@@ -369,18 +367,18 @@ impl Hero {
     // }
     
     //Subtract the target's physical defense, divided by 2, from the character's physical damage output and return the amount of damage dealt
-    fn deal_phys_damage(&mut self, defense: i32) -> i32 {
-        self.melee_attack - defense/2
+    fn deal_phys_damage(&mut self, wep_damage: i32, defense: i32) -> i32 {
+        (self.melee_attack + wep_damage) - (defense/2)
     }
 
     //Subtract the target's physical defense, divided by 2, from the character's ranged damage output and return the amount of damage dealt
-    fn deal_range_damage(&mut self, defense: i32) -> i32 {
-        self.range_attack - defense/2
+    fn deal_range_damage(&mut self, wep_damage: i32, defense: i32) -> i32 {
+        (self.range_attack + wep_damage) - (defense/2)
     }
 
     //Subtract the target's magical defense, divded by 2, from the character's magical damage output and return the amount of damage dealt
-    fn deal_mag_damage(&mut self, defense: i32) -> i32 {
-        self.magic_attack - defense/2
+    fn deal_mag_damage(&mut self, spell_damage: i32, defense: i32) -> i32 {
+        (self.magic_attack + spell_damage) - (defense/2)
     }
 
     //Chance to dodge an attack
@@ -399,11 +397,57 @@ impl Hero {
     }
 }
 
+#[derive(Debug)]
 #[allow(dead_code)]
 struct Weapon {
-    damage: u32,
+    equip: bool,
+    damage: i32,
+    critical_chance: f64,
+    crit_damage: i32, //Critical hits do double damage
 }
 
+impl Weapon {
+    
+    fn greatsword() -> Self {
+        Self {equip: false, damage: 50, critical_chance: 0.1, crit_damage: 100}
+    }
+
+    fn dagger() -> Self {
+        Self {equip: false, damage: 25, critical_chance: 0.5, crit_damage: 50}
+    }
+
+    fn spear() -> Self {
+        Self {equip: false, damage: 35, critical_chance: 0.25, crit_damage: 70}
+    }
+
+    fn shortbow() -> Self {
+        Self {equip: false, damage: 30, critical_chance: 0.4, crit_damage: 60}
+    }
+
+    fn longbow() -> Self {
+        Self {equip: false, damage: 40, critical_chance: 0.2, crit_damage: 80}
+    }
+
+    fn crit_roll(&mut self) -> bool {
+        let rng: f64 = random!();
+        let crit = rng * 100.0;
+        if crit < self.critical_chance {
+            true
+        }
+        else {
+            false
+        }
+    }
+
+}
+
+//Struct for spells/incantations
+#[allow(dead_code)]
+struct Spell {
+
+}
+
+//Struct for items (potions and such)
 #[allow(dead_code)]
 struct Item {
     
@@ -423,24 +467,20 @@ struct Boss {
 //Functions for the Dragon Boss
 impl Boss {
     
-    fn init_boss() -> Self {
+    fn dragon_boss() -> Self {
         Self {health: 525, melee_attack: 50, range_attack: 0, magic_attack: 30, physical_defense: 150, magical_defense: 150}
     }
 
-    // fn def_up(&mut self, defense: i32) {
-    //     self.defense += defense;
-    // }
-
-    fn fire_breath(&mut self, defense: i32) -> i32 {
-        (defense - self.attack) + 25
+    fn drag_fire_breath(&mut self, defense: i32) -> i32 {
+        (self.magic_attack - defense) + 10
     }
 
-    fn claw_attack(&mut self, defense: i32) -> i32 {
-        self.attack - defense/2
+    fn drag_claw_attack(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/2
     }
 
-    fn grab_attack(&mut self, defense: i32) -> i32 {
-        self.attack - defense/4
+    fn drag_grab_attack(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/4
     }
 }
 
@@ -461,9 +501,27 @@ struct Enemy {
 #[allow(dead_code)]
 impl Enemy {
     
-    //Deal damage to enemy
-    fn take_damage(&self, loss: i32) -> i32 {
-        self.health - loss
+    //Create skeleton type enemy, can be melee, ranger, or mage. All stats are the same
+    fn skeleton() -> Self {
+        Self {health: 50, melee_attack: 25, range_attack: 25, magic_attack: 25, physical_defense: 0, magical_defense: 0}
+    }
+
+    fn undead_knight() -> Self {
+        Self {health: 75, melee_attack: 40, range_attack: 0, magic_attack: 0, physical_defense: 50, magical_defense: 10}
+    }
+
+
+    //Enemy methods
+    fn deal_phys_damage(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/2
+    }
+
+    fn deal_range_damage(&mut self, defense: i32) -> i32 {
+        self.range_attack - defense/2
     }
     
+    fn deal_mag_damage(&mut self, defense: i32) -> i32 {
+        self.magic_attack - defense/2
+    }
+
 }
