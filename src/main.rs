@@ -1,3 +1,10 @@
+/*
+CS 4080
+Professor Raheja
+5/14/22
+Nate Clarke & Garrett Adams
+*/
+
 use read_input::prelude::*;
 use random_number::random;
 use std::fs::File;
@@ -9,18 +16,10 @@ use std::thread::sleep;
 static TIME: Duration = Duration::from_secs(1);
 
 
-//Takes file path and prints file
-fn print_ascii(file_path: String) {
-=======
-/*
-CS 4080
-Professor Raheja
-5/14/22
-Nate Clarke & Garrett Adams
-*/
+
 
 //takes file path and prints file
-fn print_ascii(file_path: String){
+fn print_ascii(file_path: String) {
   
     let mut file = File::open(file_path).unwrap();
     let mut art = String::new();
@@ -31,6 +30,9 @@ fn print_ascii(file_path: String){
 fn main() {
 
     let mut player = game_setup();
+
+    
+    /*
     let mut gold = 100;                      //begin with 100 gold  
     //let mut hero = Hero::init_hero();        //initialize a hero struct
     println!("You are the fiercest warrior known as Raheja the Centaur!");
@@ -47,46 +49,47 @@ fn main() {
     sleep(TIME);
     println!("Please take a look at what I have to offer...\n\n");
     sleep(TIME);
+    */
 
-    let mut choice = 0;
-    while choice != 4 {
-        println!("You currently have {} gold", gold);
-        println!("(1) Greatsword(increase attack by 50) - 50 gold ");
-        let file_path = String::from("ascii_art/sword.txt");
-        print_ascii(file_path);
+    // let mut choice = 0;
+    // while choice != 4 {
+    //     println!("You currently have {} gold", gold);
+    //     println!("(1) Greatsword(increase attack by 50) - 50 gold ");
+    //     let file_path = String::from("ascii_art/sword.txt");
+    //     print_ascii(file_path);
 
-        println!("(2) Enchanted shield(increases defense by 20) -30 gold");
-        let file_path = String::from("ascii_art/shield.txt");
-        print_ascii(file_path);
+    //     println!("(2) Enchanted shield(increases defense by 20) -30 gold");
+    //     let file_path = String::from("ascii_art/shield.txt");
+    //     print_ascii(file_path);
 
-        println!("(3) Dodge Potion(Increase dodge probability by 15%) -10 gold ");
-        let file_path = String::from("ascii_art/potion.txt");
-        print_ascii(file_path);
+    //     println!("(3) Dodge Potion(Increase dodge probability by 15%) -10 gold ");
+    //     let file_path = String::from("ascii_art/potion.txt");
+    //     print_ascii(file_path);
         
-        println!("(4) Goodbye");
+    //     println!("(4) Goodbye");
 
-        choice = input::<u32>().get();
+    //     choice = input::<u32>().get();
         
-        if choice == 1 {
-            gold -= 50;
-            hero.attack_up(50);
-        } else if choice == 2 {
-            gold -= 30;
-            hero.def_up(20);
-        } else if choice == 3 {
-            gold -= 10;
-            hero.evade_up(0.15);
-        } else if choice == 4 {
-            choice = 4; 
-            println!("Thank you traveler... I bid you good luck!");
-        } 
-        if gold < 10 {
-            choice = 4; 
-            println!("Thank you traveler... I bid you good luck!");
-        }
-        println!("\n\n");
-    }
-    dungeon_entrance(&mut hero);
+    //     if choice == 1 {
+    //         gold -= 50;
+    //         hero.attack_up(50);
+    //     } else if choice == 2 {
+    //         gold -= 30;
+    //         hero.def_up(20);
+    //     } else if choice == 3 {
+    //         gold -= 10;
+    //         hero.evade_up(0.15);
+    //     } else if choice == 4 {
+    //         choice = 4; 
+    //         println!("Thank you traveler... I bid you good luck!");
+    //     } 
+    //     if gold < 10 {
+    //         choice = 4; 
+    //         println!("Thank you traveler... I bid you good luck!");
+    //     }
+    //     println!("\n\n");
+    // }
+    // dungeon_entrance(&mut hero);
    
 }
 
@@ -103,26 +106,34 @@ fn game_setup() -> Hero {
     println!("The warrior is strongest in physical combat but weakest to magic.\nThe Archer is agile and strong with bows but weak against physical damage.\nThe mage is equipped with strong spells and incantations but is weak in a close combat fight.");
 
     //Take input and initialize Hero struct for the class they choose
-    let mut class_choice = input::<u32>().get();
+    let class_choice = input::<u32>().get();
     let mut player;
-    assert!(class_choice == 1 | 2 | 3);             //This should make it so only 1 2 or 3 are picked, not tested yet
+    //assert!(class_choice == 1 | 2 | 3);             //This should make it so only 1 2 or 3 are picked, not tested yet
 
     if class_choice == 1 {
         player = Hero::init_hero_warrior();
         player.name = name;
+        println!("Here are your starting stats:\n{:#?}", player);
+        println!("Get ready {}, your quest begins!", player.name);
+        player      //Return player::Hero struct into main()
     }
     else if class_choice == 2 {
         player = Hero::init_hero_archer();
         player.name = name;
+        println!("Here are your starting stats:\n{:#?}", player);
+        println!("Get ready {}, your quest begins!", player.name);
+        player      //Return player::Hero struct into main()
     }
     else if class_choice == 3 {
         player = Hero::init_hero_mage();
         player.name = name;
+        println!("Here are your starting stats:\n{:#?}", player);
+        println!("Get ready {}, your quest begins!", player.name);
+        player      //Return player::Hero struct into main()
     }
-
-    println!("Here are your starting stats:\n{:#?}", player);
-    println!("Get ready {}, your quest begins!", player.name);
-    player          //Return player::Hero struct into main()
+    else {
+        panic!("User entered incorrect choice.");
+    }
 }
 
 fn dungeon_entrance(hero: &mut Hero) {
@@ -153,14 +164,14 @@ fn dungeon_path_left(hero: &mut Hero) {
     println!("You enter a vast cavern and see the mighty dragon Placidusax feasting on the bones of past adventurers!");
     sleep(TIME);
     println!("Prepare for battle!\n");
-    battle_sequence(hero);
+    //battle_sequence(hero);
 }
 
 
 // fn dungeon_path_right(hero: &Hero) {
     
 // }
-
+/*
 fn battle_sequence(hero: &mut Hero) {
     //let time = Duration::from_secs(1);
     let mut dragon = Boss::init_boss();
@@ -259,7 +270,7 @@ fn battle_sequence(hero: &mut Hero) {
         print_ascii(file_path);
     }
 
-}
+} */
 
 
 //Main character struct
@@ -431,17 +442,17 @@ impl Boss {
     //     self.defense += defense;
     // }
 
-    fn fire_breath(&mut self, defense: i32) -> i32 {
-        (defense - self.attack) + 25
-    }
+    // fn fire_breath(&mut self, defense: i32) -> i32 {
+    //     (defense - self.attack) + 25
+    // }
 
-    fn claw_attack(&mut self, defense: i32) -> i32 {
-        self.attack - defense/2
-    }
+    // fn claw_attack(&mut self, defense: i32) -> i32 {
+    //     self.attack - defense/2
+    // }
 
-    fn grab_attack(&mut self, defense: i32) -> i32 {
-        self.attack - defense/4
-    }
+    // fn grab_attack(&mut self, defense: i32) -> i32 {
+    //     self.attack - defense/4
+    // }
 }
 
 impl Boss {
