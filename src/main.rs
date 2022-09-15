@@ -16,7 +16,10 @@ use std::thread::sleep;
 static TIME: Duration = Duration::from_secs(1);
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e50027d79586e418b3de98304c4a0afe9481f48b
 
 //takes file path and prints file
 fn print_ascii(file_path: String) {
@@ -35,6 +38,7 @@ fn main() {
     /*
     let mut gold = 100;                      //begin with 100 gold  
     //let mut hero = Hero::init_hero();        //initialize a hero struct
+<<<<<<< HEAD
     println!("You are the fiercest warrior known as Raheja the Centaur!");
     let file_path = String::from("ascii_art/centaur.txt");
     print_ascii(file_path);
@@ -50,6 +54,22 @@ fn main() {
     println!("Please take a look at what I have to offer...\n\n");
     sleep(TIME);
     */
+=======
+    // println!("You are the fiercest warrior known as Raheja the Centaur!");
+    // let file_path = String::from("ascii_art/centaur.txt");
+    // print_ascii(file_path);
+    // sleep(TIME);
+    // println!("You are on a quest to find and defeat the great dragon Placidusax");
+    // sleep(TIME);
+    // println!("First you decide to stop by the local trader");
+    // sleep(TIME);
+    // println!("...");
+    // sleep(TIME);
+    // println!("Hello Traveler!");
+    // sleep(TIME);
+    // println!("Please take a look at what I have to offer...\n\n");
+    // sleep(TIME);
+>>>>>>> e50027d79586e418b3de98304c4a0afe9481f48b
 
     // let mut choice = 0;
     // while choice != 4 {
@@ -380,18 +400,18 @@ impl Hero {
     // }
     
     //Subtract the target's physical defense, divided by 2, from the character's physical damage output and return the amount of damage dealt
-    fn deal_phys_damage(&mut self, defense: i32) -> i32 {
-        self.melee_attack - defense/2
+    fn deal_phys_damage(&mut self, wep_damage: i32, defense: i32) -> i32 {
+        (self.melee_attack + wep_damage) - (defense/2)
     }
 
     //Subtract the target's physical defense, divided by 2, from the character's ranged damage output and return the amount of damage dealt
-    fn deal_range_damage(&mut self, defense: i32) -> i32 {
-        self.range_attack - defense/2
+    fn deal_range_damage(&mut self, wep_damage: i32, defense: i32) -> i32 {
+        (self.range_attack + wep_damage) - (defense/2)
     }
 
     //Subtract the target's magical defense, divded by 2, from the character's magical damage output and return the amount of damage dealt
-    fn deal_mag_damage(&mut self, defense: i32) -> i32 {
-        self.magic_attack - defense/2
+    fn deal_mag_damage(&mut self, spell_damage: i32, defense: i32) -> i32 {
+        (self.magic_attack + spell_damage) - (defense/2)
     }
 
     //Chance to dodge an attack
@@ -410,11 +430,57 @@ impl Hero {
     }
 }
 
+#[derive(Debug)]
 #[allow(dead_code)]
 struct Weapon {
-    damage: u32,
+    equip: bool,
+    damage: i32,
+    critical_chance: f64,
+    crit_damage: i32, //Critical hits do double damage
 }
 
+impl Weapon {
+    
+    fn greatsword() -> Self {
+        Self {equip: false, damage: 50, critical_chance: 0.1, crit_damage: 100}
+    }
+
+    fn dagger() -> Self {
+        Self {equip: false, damage: 25, critical_chance: 0.5, crit_damage: 50}
+    }
+
+    fn spear() -> Self {
+        Self {equip: false, damage: 35, critical_chance: 0.25, crit_damage: 70}
+    }
+
+    fn shortbow() -> Self {
+        Self {equip: false, damage: 30, critical_chance: 0.4, crit_damage: 60}
+    }
+
+    fn longbow() -> Self {
+        Self {equip: false, damage: 40, critical_chance: 0.2, crit_damage: 80}
+    }
+
+    fn crit_roll(&mut self) -> bool {
+        let rng: f64 = random!();
+        let crit = rng * 100.0;
+        if crit < self.critical_chance {
+            true
+        }
+        else {
+            false
+        }
+    }
+
+}
+
+//Struct for spells/incantations
+#[allow(dead_code)]
+struct Spell {
+
+}
+
+//Struct for items (potions and such)
 #[allow(dead_code)]
 struct Item {
     
@@ -434,10 +500,11 @@ struct Boss {
 //Functions for the Dragon Boss
 impl Boss {
     
-    fn init_boss() -> Self {
+    fn dragon_boss() -> Self {
         Self {health: 525, melee_attack: 50, range_attack: 0, magic_attack: 30, physical_defense: 150, magical_defense: 150}
     }
 
+<<<<<<< HEAD
     // fn def_up(&mut self, defense: i32) {
     //     self.defense += defense;
     // }
@@ -453,6 +520,19 @@ impl Boss {
     // fn grab_attack(&mut self, defense: i32) -> i32 {
     //     self.attack - defense/4
     // }
+=======
+    fn drag_fire_breath(&mut self, defense: i32) -> i32 {
+        (self.magic_attack - defense) + 10
+    }
+
+    fn drag_claw_attack(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/2
+    }
+
+    fn drag_grab_attack(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/4
+    }
+>>>>>>> e50027d79586e418b3de98304c4a0afe9481f48b
 }
 
 impl Boss {
@@ -472,9 +552,27 @@ struct Enemy {
 #[allow(dead_code)]
 impl Enemy {
     
-    //Deal damage to enemy
-    fn take_damage(&self, loss: i32) -> i32 {
-        self.health - loss
+    //Create skeleton type enemy, can be melee, ranger, or mage. All stats are the same
+    fn skeleton() -> Self {
+        Self {health: 50, melee_attack: 25, range_attack: 25, magic_attack: 25, physical_defense: 0, magical_defense: 0}
+    }
+
+    fn undead_knight() -> Self {
+        Self {health: 75, melee_attack: 40, range_attack: 0, magic_attack: 0, physical_defense: 50, magical_defense: 10}
+    }
+
+
+    //Enemy methods
+    fn deal_phys_damage(&mut self, defense: i32) -> i32 {
+        self.melee_attack - defense/2
+    }
+
+    fn deal_range_damage(&mut self, defense: i32) -> i32 {
+        self.range_attack - defense/2
     }
     
+    fn deal_mag_damage(&mut self, defense: i32) -> i32 {
+        self.magic_attack - defense/2
+    }
+
 }
