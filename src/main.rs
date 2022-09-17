@@ -504,7 +504,6 @@ impl Boss {
         Self {health: 525, melee_attack: 50, range_attack: 0, magic_attack: 30, physical_defense: 150, magical_defense: 150}
     }
 
-<<<<<<< HEAD
     // fn def_up(&mut self, defense: i32) {
     //     self.defense += defense;
     // }
@@ -520,19 +519,6 @@ impl Boss {
     // fn grab_attack(&mut self, defense: i32) -> i32 {
     //     self.attack - defense/4
     // }
-=======
-    fn drag_fire_breath(&mut self, defense: i32) -> i32 {
-        (self.magic_attack - defense) + 10
-    }
-
-    fn drag_claw_attack(&mut self, defense: i32) -> i32 {
-        self.melee_attack - defense/2
-    }
-
-    fn drag_grab_attack(&mut self, defense: i32) -> i32 {
-        self.melee_attack - defense/4
-    }
->>>>>>> e50027d79586e418b3de98304c4a0afe9481f48b
 }
 
 impl Boss {
